@@ -31,8 +31,10 @@ RUN gpg --import KEYS
 ENV HADOOP_VERSION=3.4.1
 # ENV HADOOP_URL=https://archive.apache.org/dist/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz
 
-ADD ./hadoop-$HADOOP_VERSION.tar /tmp/hadoop.tar.gz
-ADD ./hadoop-$HADOOP_VERSION.tar.asc /tmp/hadoop.tar.gz.asc
+# RUN mkdir /tmp
+
+ADD ./hadoop-3.4.1.tar.gz /tmp/hadoop.tar.gz
+ADD ./hadoop-3.4.1.tar.gz.asc /tmp/hadoop.tar.gz.asc
 
 RUN set -x \
     gpg --verify /tmp/hadoop.tar.gz.asc \
