@@ -33,8 +33,8 @@ ENV HADOOP_VERSION=3.4.1
 
 # RUN mkdir /tmp
 
-ADD ./hadoop-3.4.1.tar.gz /tmp/hadoop.tar.gz
-ADD ./hadoop-3.4.1.tar.gz.asc /tmp/hadoop.tar.gz.asc
+COPY ./hadoop-3.4.1.tar.gz /tmp/hadoop.tar.gz
+COPY ./hadoop-3.4.1.tar.gz.asc /tmp/hadoop.tar.gz.asc
 
 RUN set -x \
     && gpg --verify /tmp/hadoop.tar.gz.asc \
