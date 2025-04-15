@@ -37,7 +37,7 @@ ADD ./hadoop-3.4.1.tar.gz /tmp/hadoop.tar.gz
 ADD ./hadoop-3.4.1.tar.gz.asc /tmp/hadoop.tar.gz.asc
 
 RUN set -x \
-    gpg --verify /tmp/hadoop.tar.gz.asc \
+    && gpg --verify /tmp/hadoop.tar.gz.asc \
     && tar -xvf /tmp/hadoop.tar.gz -C /opt/ \
     && rm /tmp/hadoop.tar.gz*
 
