@@ -27,7 +27,7 @@ docker run -d --hostname kafka-ui --name kafka-ui -p 9088:8080 -e DYNAMIC_CONFIG
 ## TEST
 
 
-TERMINALE 1:
+TERMINALE 1: Creazione topic e creazione producer
 
 ```shell
 # TEST CREAZIONE TOPIC e CREAZIONE PRODUCER
@@ -49,7 +49,13 @@ kafka-console-producer --topic test-corso --bootstrap-server broker01:29092
 
 ```
 
+TERMINALE 2: creazione consumer
 
+```shell
+docker exec -it broker01 /bin/bash
+kafka-console-consumer --topic test-corso --from-beginning --bootstrap-server broker01:29092
+
+```
 
 
 ## Docs
