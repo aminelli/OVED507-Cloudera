@@ -15,6 +15,12 @@ RUN curl -L https://archive.apache.org/dist/sqoop/${SQOOP_VERSION}/sqoop-${SQOOP
 RUN mkdir -p /opt/hadoop
 ENV HADOOP_COMMON_HOME=/opt/hadoop
 ENV HADOOP_MAPRED_HOME=/opt/hadoop
+ENV HBASE_HOME=/opt/hadoop
+ENV HCAT_HOME=/opt/hadoop
+ENV ACCUMULO_HOME=/opt/hadoop
+ENV ZOOKEEPER_HOME=/opt/hadoop
+
+ 
 
 # Montare qui i driver jdbc di ogni db che si vuole utilizzare
 COPY ./lib/mysql-connector-j-8.2.0.jar /opt/sqoop/lib/mysql-connector-j-8.2.0.jar
