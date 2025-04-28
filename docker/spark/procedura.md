@@ -10,3 +10,6 @@ docker compose --project-name spark-cluster up -d
 docker compose --project-name spark-cluster down -v
 
 ```
+
+note:
+- spark home:  /opt/bitnami/spark
