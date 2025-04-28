@@ -3,5 +3,5 @@
 ## Comandi shell
 
 ```shell
-
+docker network create net-kafka
 ```
