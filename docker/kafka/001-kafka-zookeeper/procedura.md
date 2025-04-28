@@ -24,6 +24,30 @@ docker run -d --hostname kafka-ui --name kafka-ui -p 9088:8080 -e DYNAMIC_CONFIG
 
 ```
 
+## TEST
+
+
+```shell
+# TEST CREAZIONE TOPIC e CREAZIONE PRODUCER
+
+# Terminale per creazione topic
+docker exec -it broker01 /bin/bash
+
+# Una volta entrato in tty nel terminale lanciare la seguente sequenza di comandi
+kafka-topics --create --topic test-corso --bootstrap-server localhost:9092
+
+# Verifica della creazione del topic
+kafka-topics --describe --topic test-corso --bootstrap-server localhost:9092
+
+# Lista di tutti i topics topic
+kafka-topics --list --bootstrap-server localhost:9092
+
+
+
+```
+
+
+
 
 ## Docs
 
