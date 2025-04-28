@@ -19,6 +19,7 @@ ENV HADOOP_MAPRED_HOME=/opt/hadoop
 # Montare qui i driver jdbc di ogni db che si vuole utilizzare
 COPY ./lib/mysql-connector-j-8.2.0.jar /opt/sqoop/lib/mysql-connector-j-8.2.0.jar
 
+WORKDIR /opt/sqoop
 
 EXPOSE 16000
 
