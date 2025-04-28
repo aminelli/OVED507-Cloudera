@@ -5,7 +5,7 @@ ENV FLUME_HOME=/opt/flume
 #ENV FLUME_CONF_DIR=${FLUME_HOME}/conf
 ENV PATH=${PATH}:${FLUME_HOME}/bin
 
-RUN apk add --no-cache wget tar bash
+RUN apk add --no-cache wget tar bash nano htop
 
 RUN mkdir -p /opt && \
 wget https://downloads.apache.org/flume/${FLUME_VERSION}/apache-flume-${FLUME_VERSION}-bin.tar.gz -O /tmp/flume.tar.gz && \
