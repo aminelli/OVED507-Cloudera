@@ -185,6 +185,31 @@ services:
       - ./config/hbase-site.xml:/opt/hbase/conf/hbase-site.xml  
       - ./config/regionservers:/opt/hbase/conf/regionservers  
 
+  hbasethrift:
+    image: aci-hbase:2.5.11-thrift2
+    container_name: hbasethrift
+    hostname: hbasethrift
+    depends_on:
+      - hbasemaster
+      - hbasezk
+    networks:
+      - net-cloudera
+    volumes:
+      - ./config/hbase-site.xml:/opt/hbase/conf/hbase-site.xml  
+      - ./config/regionservers:/opt/hbase/conf/regionservers 
+
+  hue:
+    image: gethue/hue:latest
+    container_name: hue
+    hostname: hue
+    ports:
+      - "8888:8888"
+    networks:
+      - net-cloudera
+    volumes:
+      - ./hue.ini:/usr/share/hue/desktop/conf/hue.ini
+      - ./conf:/etc/hbase/conf
+   
 
 volumes:
   vol_hadoop_namemode:
