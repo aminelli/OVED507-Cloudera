@@ -8,7 +8,7 @@ ENV PATH=${PATH}:${HBASE_HOME}/bin
 # https://dlcdn.apache.org/hbase/2.5.11/hbase-/2.5.11-bin.tar.gz
 
 RUN apt-get update && \
-    apt-get install -y curl wget tar nano htop && \
+    apt-get install -y curl wget tar nano htop net-tools && \
     wget https://dlcdn.apache.org/hbase/${HBASE_VERSION}/hbase-${HBASE_VERSION}-bin.tar.gz && \
     tar xzf hbase-${HBASE_VERSION}-bin.tar.gz -C /opt && \
     mv /opt/hbase-${HBASE_VERSION} /opt/hbase && \
