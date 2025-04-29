@@ -1,0 +1,127 @@
+version: "3"
+
+
+services:
+
+  namenode:
+    image: aci-hadoop:3.4.1-namenode
+    container_name: namenode
+    hostname: namenode
+    environment:
+      - CLUSTER_NAME=CLSTHADOOP
+    env_file:
+      - ./hadoop.env
+    ports:
+      - "9870:9870" # interfaccia web del namenode
+      - "9000:9000"
+    volumes:
+      - vol_hadoop_namemode:/hadoop/dfs/name
+    networks:
+      - net-cloudera
+
+  datanode1:
+    image: aci-hadoop:3.4.1-datanode
+    container_name: datanode1
+    hostname: datanode1
+    environment:
+      - SERVICE_PRECONDITION=namenode:9870
+    env_file:
+      - ./hadoop.env
+    ports:
+      - "9864:9864"
+    volumes:
+      - vol_hadoop_datanode1:/hadoop/dfs/data
+    networks:
+      - net-cloudera  
+
+  datanode2:
+    image: aci-hadoop:3.4.1-datanode
+    container_name: datanode2
+    hostname: datanode2
+    environment:
+      - SERVICE_PRECONDITION=namenode:9870
+    env_file:
+      - ./hadoop.env
+    ports:
+      - "9865:9864"
+    volumes:
+      - vol_hadoop_datanode2:/hadoop/dfs/data
+    networks:
+      - net-cloudera  
+
+  datanode3:
+    image: aci-hadoop:3.4.1-datanode
+    container_name: datanode3
+    hostname: datanode3
+    environment:
+      - SERVICE_PRECONDITION=namenode:9870
+    env_file:
+      - ./hadoop.env
+    ports:
+      - "9864:9864"
+    volumes:
+      - vol_hadoop_datanode3:/hadoop/dfs/data
+    networks:
+      - net-cloudera  
+
+  resourcemanager:
+    image: aci-hadoop:3.4.1-resourcemanager
+    container_name: resourcemanager
+    hostname: resourcemanager
+    environment:
+      - SERVICE_PRECONDITION="namenode:9000 namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864" 
+    env_file:
+      - ./hadoop.env
+    ports:
+      - "8088:8088"
+      - "19888:19888"
+    networks:
+      - net-cloudera  
+
+  nodemanager:
+    image: aci-hadoop:3.4.1-nodemanager
+    container_name: nodemanager
+    hostname: nodemanager
+    environment:
+      - SERVICE_PRECONDITION="namenode:9000 namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864 resourcemanager:8088" 
+    env_file:
+      - ./hadoop.env
+    ports:
+      - "8088:8088"
+      - "19888:19888"
+    networks:
+      - net-cloudera  
+
+  historyserver:
+    image: aci-hadoop:3.4.1-historyserver
+    container_name: historyserver
+    hostname: historyserver
+    environment:
+      - SERVICE_PRECONDITION="namenode:9000 namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864 resourcemanager:8088" 
+    env_file:
+      - ./hadoop.env
+    ports:
+      - "8088:8088"
+      - "19888:19888"
+    volumes:
+      - vol_hadoop_historyserver:/hadoop/yarn/timeline
+    networks:
+      - net-cloudera  
+
+
+volumes:
+  vol_hadoop_namemode:
+    driver: local
+  vol_hadoop_datanode1:
+    driver: local
+  vol_hadoop_datanode2:
+    driver: local
+  vol_hadoop_datanode3:
+    driver: local
+  vol_hadoop_historyserver:
+    driver: local
+
+networks:
+  net-cloudera:
+    name: net-cloudera
+    driver: bridge
