@@ -2,3 +2,4 @@ docker/hadoop/base/hadoop-3.4.1.tar.gz
 docker/hadoop/base/hadoop-3.4.1.tar.gz.asc
 docker/hadoop/downloads/hadoop-3.4.1-site.tar.gz
 docker/hadoop/downloads/hadoop-3.4.1-src.tar.gz.asc
+docker/hbase/hbase-2.5.11-bin.tar.gz

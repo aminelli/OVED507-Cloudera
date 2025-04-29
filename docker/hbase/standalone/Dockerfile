@@ -1,0 +1,26 @@
+FROM openjdk:11-jdk-slim
+
+ENV HBASE_VERSION=2.5.11
+ENV HBASE_HOME=/opt/hbase
+ENV PATH=${PATH}:${HBASE_HOME}/bin
+
+# https://dlcdn.apache.org/hbase/2.5.11/hbase-2.5.11-bin.tar.gz
+
+RUN apt-get update && \
+    apt-get install -y curl wget tar nano htop && \
+    wget https://dlcdn.apache.org/hbase//${HBASE_VERSION}/hbase-/${HBASE_VERSION}-bin.tar.gz && \
+    tar xzf ${HBASE_VERSION}-bin.tar.gz -C /opt && \
+    mv /opt/hbase-${HBASE_VERSION} /opt/hbase && \
+    rm ${HBASE_VERSION}-bin.tar.gz
+
+ COPY hbase-site.xml /opt/hbase/conf/hbase-site.xml
+ 
+ EXPOSE 16000 16010 16020 16030 2181
+
+ CMD ["hbase", "master", "start"]
+
+
+
+
+
+

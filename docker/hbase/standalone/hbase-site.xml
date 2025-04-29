@@ -1,0 +1,14 @@
+<configuration>
+    <property>
+        <name>hbase.rootdir</name>
+        <value>file:///opt/hbase/data</value>
+    </property>
+    <property>
+        <name>hbase.cluster.distributed</name>
+        <value>false</value>
+    </property>
+    <property>
+        <name>hbase.zookeeper.property.dataLogDir</name>
+        <value>/opt/hbase/zookeeper</value>
+    </property>
+</configuration>
