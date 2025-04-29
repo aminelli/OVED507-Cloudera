@@ -78,16 +78,27 @@ services:
     networks:
       - net-cloudera  
 
-  nodemanager:
+  nodemanager1:
     image: aci-hadoop:3.4.1-nodemanager
-    container_name: nodemanager
-    hostname: nodemanager
+    container_name: nodemanager1
+    hostname: nodemanager1
     environment:
       - SERVICE_PRECONDITION=namenode:9000 namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864 resourcemanager:8088
     env_file:
       - ./hadoop.env
     networks:
-      - net-cloudera  
+      - net-cloudera 
+
+  nodemanager2:
+    image: aci-hadoop:3.4.1-nodemanager
+    container_name: nodemanager2
+    hostname: nodemanager2
+    environment:
+      - SERVICE_PRECONDITION=namenode:9000 namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864 resourcemanager:8088
+    env_file:
+      - ./hadoop.env
+    networks:
+      - net-cloudera 
 
   historyserver:
     image: aci-hadoop:3.4.1-historyserver
@@ -104,6 +115,75 @@ services:
       - vol_hadoop_historyserver:/hadoop/yarn/timeline
     networks:
       - net-cloudera  
+
+  hbasezk:
+    image: aci-hbase:2.5.11-zookeeper
+    container_name: hbasezk
+    hostname: hbasezk
+    ports:
+      - "2181:2181"
+    depends_on:
+      - namenode
+    networks:
+      - net-cloudera  
+    volumes:
+      - ./config/hbase-site.xml:/opt/hbase/conf/hbase-site.xml  
+      - ./config/regionservers:/opt/hbase/conf/regionservers  
+
+
+  hbasemaster:
+    image: aci-hbase:2.5.11-master
+    container_name: hbasemaster
+    hostname: hbasemaster
+    ports:
+      - "16010:16010"
+    depends_on:
+      - namenode
+      - hbasezk
+    networks:
+      - net-cloudera
+    volumes:
+      - ./config/hbase-site.xml:/opt/hbase/conf/hbase-site.xml  
+      - ./config/regionservers:/opt/hbase/conf/regionservers  
+
+  hbaseregion1:
+    image: aci-hbase:2.5.11-regionserver
+    container_name: hbaseregion1
+    hostname: hbaseregion1
+    depends_on:
+      - hbasemaster
+      - hbasezk
+    networks:
+      - net-cloudera
+    volumes:
+      - ./config/hbase-site.xml:/opt/hbase/conf/hbase-site.xml  
+      - ./config/regionservers:/opt/hbase/conf/regionservers  
+
+  hbaseregion2:
+    image: aci-hbase:2.5.11-regionserver
+    container_name: hbaseregion2
+    hostname: hbaseregion2
+    depends_on:
+      - hbasemaster
+      - hbasezk
+    networks:
+      - net-cloudera
+    volumes:
+      - ./config/hbase-site.xml:/opt/hbase/conf/hbase-site.xml  
+      - ./config/regionservers:/opt/hbase/conf/regionservers  
+
+  hbaseregion3:
+    image: aci-hbase:2.5.11-regionserver
+    container_name: hbaseregion3
+    hostname: hbaseregion3
+    depends_on:
+      - hbasemaster
+      - hbasezk
+    networks:
+      - net-cloudera
+    volumes:
+      - ./config/hbase-site.xml:/opt/hbase/conf/hbase-site.xml  
+      - ./config/regionservers:/opt/hbase/conf/regionservers  
 
 
 volumes:
