@@ -69,7 +69,7 @@ services:
     container_name: resourcemanager
     hostname: resourcemanager
     environment:
-      - SERVICE_PRECONDITION="namenode:9000 namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864" 
+      - SERVICE_PRECONDITION=namenode:9000 namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864
     env_file:
       - ./hadoop.env
     ports:
@@ -83,7 +83,7 @@ services:
     container_name: nodemanager
     hostname: nodemanager
     environment:
-      - SERVICE_PRECONDITION="namenode:9000 namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864 resourcemanager:8088" 
+      - SERVICE_PRECONDITION=namenode:9000 namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864 resourcemanager:8088
     env_file:
       - ./hadoop.env
     networks:
@@ -94,10 +94,11 @@ services:
     container_name: historyserver
     hostname: historyserver
     environment:
-      - SERVICE_PRECONDITION="namenode:9000 namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864 resourcemanager:8088" 
+      - SERVICE_PRECONDITION=namenode:9000 namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864 resourcemanager:8088
     env_file:
       - ./hadoop.env
     ports:
+      - "8188:8188"
       - "19889:19888"
     volumes:
       - vol_hadoop_historyserver:/hadoop/yarn/timeline
