@@ -14,11 +14,13 @@ RUN apt-get update && \
     mv /opt/hbase-${HBASE_VERSION} /opt/hbase && \
     rm hbase-${HBASE_VERSION}-bin.tar.gz
 
- COPY hbase-site.xml /opt/hbase/conf/hbase-site.xml
+COPY hbase-site.xml /opt/hbase/conf/hbase-site.xml
  
- EXPOSE 16000 16010 16020 16030 2181
+EXPOSE 16000 16010 16020 16030 2181
 
- CMD ["hbase", "master", "start"]
+CMD ["hbase", "master", "start"]
+
+ # CMD ["start-hbase.sh"]
 
 
 
